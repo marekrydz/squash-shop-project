@@ -1,4 +1,4 @@
-package com.mr.springsquashshop.dao;
+package com.mr.springsquashshop.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

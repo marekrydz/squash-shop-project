@@ -1,4 +1,4 @@
-package com.mr.springsquashshop.dao;
+package com.mr.springsquashshop.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
