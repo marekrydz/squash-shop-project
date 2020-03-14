@@ -13,6 +13,8 @@ public class ProductCategory {
     private Long id;
     @Column(name = "category_name")
     private String categoryName;
+    @OneToMany(mappedBy = "categoryId", cascade = CascadeType.ALL)
+    private Set<Product>products;
 
     public Long getId() {
         return id;
