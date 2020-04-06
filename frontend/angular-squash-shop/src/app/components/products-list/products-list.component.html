@@ -7,8 +7,7 @@
         <div *ngFor="let product of products" class="col-md-3">
 
           <div class="product-box">
-              <img src="assets/images/products/rackets/{{product.imageUrl}}" class="img-responsive">
-              <h1>lalal</h1>
+              <img src="assets/images/products/{{category}}/{{product.imageUrl}}" class="img-responsive">
             <div class="price">{{product.unitPrice | currency: "EUR" }}</div>
             <a href="#" class="primary-btn">Add to cart</a>
           </div>
