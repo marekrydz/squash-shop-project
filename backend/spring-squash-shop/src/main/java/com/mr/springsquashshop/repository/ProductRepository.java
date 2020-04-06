@@ -8,6 +8,7 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RepositoryRestController
 public interface ProductRepository extends CrudRepository<Product,Long> {
