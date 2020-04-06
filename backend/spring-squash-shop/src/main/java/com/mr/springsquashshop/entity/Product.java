@@ -37,7 +37,7 @@ public class Product {
     private LocalDateTime lastUpdated;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    private ProductCategory categoryId;
+    private ProductCategory category;
 
     public Product(String sku, String name, String description, BigDecimal unitPrice, String imageUrl, boolean active, int unitsInStock) {
         this.sku = sku;
