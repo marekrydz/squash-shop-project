@@ -13,5 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ProductRepository extends CrudRepository<Product,Long> {
 
     Page<Product> findByCategoryId (@RequestParam(name = "id") Long id, Pageable pageable);
+    Page<Product> findProductByNameContains (@RequestParam(name = "name") String name, Pageable pageable);
 
 }
