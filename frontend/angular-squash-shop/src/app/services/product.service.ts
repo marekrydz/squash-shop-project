@@ -26,6 +26,12 @@ export class ProductService {
     return this.http.get<GetResponseProductCategories>(this.baseCategoryUrl)
       .pipe(map(response => response._embedded.productCategories))
   }
+
+  getSearchedProductsList(name: string):Observable<Product[]> {
+    const url: string = `${this.baseProductUrl}/search/findProductByNameContains?name=${name}`;
+    return this.http.get<GetResponseProduct>(url)
+      .pipe(map(response => response._embedded.products))
+  }
 }
 
 export interface GetResponseProduct {
