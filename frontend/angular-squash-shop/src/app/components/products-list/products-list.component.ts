@@ -13,6 +13,7 @@ export class ProductsListComponent implements OnInit {
   products: Product[];
   currentCategoryId: number;
   category: string;
+  name: string;
 
 
   constructor(private productService: ProductService, public activateRoute: ActivatedRoute) {
@@ -20,33 +21,30 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit() {
     this.activateRoute.paramMap.subscribe(() => {
-      this.getProducts()
+      this.handleProducts()
     });
   }
 
-  getProducts() {
-    let hasCategoryId: boolean;
+  handleProducts() {
+    let hasCategoryId: boolean = this.activateRoute.snapshot.paramMap.has('id');
+    let hasProductName: boolean = this.activateRoute.snapshot.paramMap.has('name');
 
-    hasCategoryId = this.activateRoute.snapshot.paramMap.has('id');
-
-    if (hasCategoryId) {
+    if (hasProductName) {
+      this.name = this.activateRoute.snapshot.paramMap.get('name');
+      this.getSearchedProducts(this.name);
+    } else if (hasCategoryId) {
       this.currentCategoryId = +this.activateRoute.snapshot.paramMap.get('id');
+      this.getProducts(this.currentCategoryId)
     } else {
-      this.currentCategoryId = 1;
+      this.getProducts(1);
     }
-
-    this.getCategory(this.currentCategoryId);
-
-    this.productService.getProductsList(this.currentCategoryId).subscribe(data => this.products = data);
   }
 
-  getCategory(category:number) {
-    if (category === 1) {
-      this.category = "rackets"
-    } else if (category === 2) {
-      this.category = "shoes"
-    } else {
-      this.category = "balls"
-    }
+  getSearchedProducts(name: string) {
+    this.productService.getSearchedProductsList(name).subscribe(data => this.products = data)
+  }
+
+  getProducts(categoryId: number) {
+    this.productService.getProductsList(categoryId).subscribe(data => this.products = data);
   }
 }
