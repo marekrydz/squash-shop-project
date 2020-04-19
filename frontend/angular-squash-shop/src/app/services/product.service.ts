@@ -32,6 +32,11 @@ export class ProductService {
     return this.http.get<GetResponseProduct>(url)
       .pipe(map(response => response._embedded.products))
   }
+
+  getProduct(productId:number):Observable<Product> {
+
+        return this.http.get<Product>(`${this.baseProductUrl}/${productId}`);
+  }
 }
 
 export interface GetResponseProduct {
