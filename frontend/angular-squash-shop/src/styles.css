@@ -723,6 +723,21 @@ table.table.table-bordered th{
 .detail-section{
   margin-top:60px
 }
+
+.detail-img{
+  width: 200px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.product-description-header{
+  margin-top: 15px;
+}
+
+.back-to-main-btn{
+  margin-bottom: 60px;
+}
 /**/
 
 /*
@@ -744,12 +759,14 @@ a.primary-btn{
   color:#fff;
   border-radius:2px;
   font-size:14px;
-  margin-top:5px
+  margin-top:5px;
+  margin-bottom:5px;
 }
 a.primary-btn:hover{
   background:#0da8e4;
   color:#fff
 }
+
 
 .active-link {
   font-weight: bold;
