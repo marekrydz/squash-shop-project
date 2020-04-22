@@ -9,6 +9,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ProductCategoryListComponent} from './components/product-category-list/product-category-list.component';
 import {SearchProductsComponent} from './components/search-products/search-products.component';
 import {ProductDetailsComponent} from './components/product-details/product-details.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   {path: 'category/:id', component: ProductsListComponent},
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
-    )
+    ),
+    NgbModule,
 ],
   providers: [ProductService],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductService} from '../../services/product.service';
+import {GetResponseProduct, ProductService} from '../../services/product.service';
 import {Product} from "../../common/product";
 import {ActivatedRoute} from "@angular/router";
 
@@ -11,9 +11,15 @@ import {ActivatedRoute} from "@angular/router";
 export class ProductsListComponent implements OnInit {
 
   products: Product[];
-  currentCategoryId: number;
+  currentCategoryId: number = 1;
+  previousCategoryId: number = 1;
   category: string;
   name: string;
+
+  // Pageable
+  pageNumber: number = 1;
+  pageSize: number = 2;
+  collectionSize: number = 0;
 
 
   constructor(private productService: ProductService, public activateRoute: ActivatedRoute) {
@@ -34,9 +40,17 @@ export class ProductsListComponent implements OnInit {
       this.getSearchedProducts(this.name);
     } else if (hasCategoryId) {
       this.currentCategoryId = +this.activateRoute.snapshot.paramMap.get('id');
-      this.getProducts(this.currentCategoryId)
+
+      //check if user get new category. If yes, paginate from 1
+      if (this.previousCategoryId != this.currentCategoryId) {
+        this.pageNumber = 1
+      }
+
+      this.previousCategoryId = this.currentCategoryId;
+      this.getProducts(this.currentCategoryId, this.pageNumber, this.pageSize);
+
     } else {
-      this.getProducts(1);
+      this.getProducts(1, this.pageNumber, this.pageSize);
     }
   }
 
@@ -44,7 +58,19 @@ export class ProductsListComponent implements OnInit {
     this.productService.getSearchedProductsList(name).subscribe(data => this.products = data)
   }
 
-  getProducts(categoryId: number) {
-    this.productService.getProductsList(categoryId).subscribe(data => this.products = data);
+  getProducts(categoryId: number, pageNumber: number, pageSize: number) {
+    this.productService.getProductsPageable(categoryId, pageNumber - 1, pageSize)
+      .subscribe(data => this.resultProcess(data));
+  }
+
+  resultProcess(data: GetResponseProduct) {
+    this.products = data._embedded.products;
+    this.pageNumber = data.page.number + 1;
+    this.pageSize = data.page.size;
+    this.collectionSize = data.page.totalElements;
+  }
+
+  changePageSize(pageSize: number) {
+    this.getProducts(this.currentCategoryId, 1, pageSize);
   }
 }
