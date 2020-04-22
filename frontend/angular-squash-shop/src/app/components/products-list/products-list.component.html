@@ -26,19 +26,31 @@
       <div class="footer-pagination">
         <div class="row">
           <div class="col-md-5"></div>
-            <div class="row">
-                <ngb-pagination
-                  [(page)]="pageNumber"
-                  [pageSize]="pageSize"
-                  [collectionSize]="collectionSize"
-                  (pageChange)="getProducts(currentCategoryId,pageNumber,pageSize)"
-                >
-                </ngb-pagination>
-            </div>
+          <div class="row">
+            <ngb-pagination
+              [(page)]="pageNumber"
+              [pageSize]="pageSize"
+              [collectionSize]="collectionSize"
+              [maxSize]="5"
+              [boundaryLinks]=true
+              (pageChange)="getProducts(currentCategoryId,pageNumber,pageSize)">
+            </ngb-pagination>
+          </div>
         </div>
       </div>
       <!-- end footer -->
 
+      <!--page size selector -->
+      <div class="float-right">
+        <div class="form-group">
+          <span>Page size</span>
+          <select (change)="changePageSize($event.target.value)">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+      </div>
     </div>
   </div>
 </div>
