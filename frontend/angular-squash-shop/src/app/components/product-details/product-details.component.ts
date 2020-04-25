@@ -28,7 +28,5 @@ export class ProductDetailsComponent implements OnInit {
     } else {
       console.log("zobaczymy");
     }
-
-    this.productService.getProduct(productId).subscribe(data => console.log(this.product = data))
   }
 }
