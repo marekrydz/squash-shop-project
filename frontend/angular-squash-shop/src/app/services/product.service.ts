@@ -16,8 +16,8 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  getProductsPageable(currentCategoryId:number, pageNumber:number, pageSize:number): Observable<GetResponseProduct> {
-   const url: string = `${this.baseProductUrl}/search/findByCategoryId?id=${currentCategoryId}&page=${pageNumber}&size=${pageSize}`;
+  getProductsPageable(currentCategoryId: number, pageNumber: number, pageSize: number): Observable<GetResponseProduct> {
+    const url: string = `${this.baseProductUrl}/search/findByCategoryId?id=${currentCategoryId}&page=${pageNumber}&size=${pageSize}`;
     return this.http.get<GetResponseProduct>(url);
   }
 
@@ -26,15 +26,9 @@ export class ProductService {
       .pipe(map(response => response._embedded.productCategories))
   }
 
-  getSearchedProductsList(name: string):Observable<Product[]> {
-    const url: string = `${this.baseProductUrl}/search/findProductByNameContains?name=${name}`;
-    return this.http.get<GetResponseProduct>(url)
-      .pipe(map(response => response._embedded.products))
-  }
-
-  getProduct(productId:number):Observable<Product> {
-
-        return this.http.get<Product>(`${this.baseProductUrl}/${productId}`);
+  getSearchedProductsPageable(name: string, page: number, pageSize: number): Observable<GetResponseProduct> {
+    const url: string = `${this.baseProductUrl}/search/findProductByNameContains?name=${name}&page=${page}&size=${pageSize}`;
+    return this.http.get<GetResponseProduct>(url);
   }
 }
 

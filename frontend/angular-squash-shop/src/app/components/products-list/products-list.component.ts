@@ -20,6 +20,7 @@ export class ProductsListComponent implements OnInit {
   pageNumber: number = 1;
   pageSize: number = 2;
   collectionSize: number = 0;
+  previousName: string = null;
 
 
   constructor(private productService: ProductService, public activateRoute: ActivatedRoute) {
@@ -37,7 +38,16 @@ export class ProductsListComponent implements OnInit {
 
     if (hasProductName) {
       this.name = this.activateRoute.snapshot.paramMap.get('name');
-      this.getSearchedProducts(this.name);
+
+      //check if user start new search. If yes, paginate from 1
+      if (this.previousName != this.name) {
+        this.pageNumber = 1
+      }
+      this.previousName = this.name;
+
+      console.log("Name: "+this.name," pageNumber: " + this.pageNumber + " pageSize: " +this.pageSize)
+      this.getSearchedProducts(this.name,this.pageNumber,this.pageSize);
+
     } else if (hasCategoryId) {
       this.currentCategoryId = +this.activateRoute.snapshot.paramMap.get('id');
 
@@ -45,8 +55,8 @@ export class ProductsListComponent implements OnInit {
       if (this.previousCategoryId != this.currentCategoryId) {
         this.pageNumber = 1
       }
-
       this.previousCategoryId = this.currentCategoryId;
+
       this.getProducts(this.currentCategoryId, this.pageNumber, this.pageSize);
 
     } else {
@@ -54,8 +64,9 @@ export class ProductsListComponent implements OnInit {
     }
   }
 
-  getSearchedProducts(name: string) {
-    this.productService.getSearchedProductsList(name).subscribe(data => this.products = data)
+  getSearchedProducts(name: string, pageNumber: number, pageSize: number) {
+    this.productService.getSearchedProductsPageable(name, pageNumber-1, pageSize)
+      .subscribe(data => this.resultProcess(data))
   }
 
   getProducts(categoryId: number, pageNumber: number, pageSize: number) {
