@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {CartItemService} from "../../services/cart-item.service";
 
 @Component({
   selector: 'app-cart-status',
@@ -7,9 +8,18 @@ import {Component, OnInit} from '@angular/core';
 })
 export class CartStatusComponent implements OnInit {
 
-  constructor() { }
+  totalPrice = 0.0;
+  itemQuantity = 0;
 
-  ngOnInit() {
+  constructor(private cartItemService: CartItemService) {
   }
 
+  ngOnInit() {
+    this.updateCartStatus()
+  }
+
+  updateCartStatus() {
+    this.cartItemService.totalPrice.subscribe(data => this.totalPrice = data);
+    this.cartItemService.itemQuantity.subscribe(data => this.itemQuantity = data);
+  }
 }
