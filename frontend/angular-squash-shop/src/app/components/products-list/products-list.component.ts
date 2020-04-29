@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GetResponseProduct, ProductService} from '../../services/product.service';
 import {Product} from "../../common/product";
 import {ActivatedRoute} from "@angular/router";
+import {CartItemService} from "../../services/cart-item.service";
 
 @Component({
   selector: 'app-products-list',
@@ -23,7 +24,7 @@ export class ProductsListComponent implements OnInit {
   previousName: string = null;
 
 
-  constructor(private productService: ProductService, public activateRoute: ActivatedRoute) {
+  constructor(private productService: ProductService, public activateRoute: ActivatedRoute, private cartItemService: CartItemService) {
   }
 
   ngOnInit() {
@@ -45,8 +46,8 @@ export class ProductsListComponent implements OnInit {
       }
       this.previousName = this.name;
 
-      console.log("Name: "+this.name," pageNumber: " + this.pageNumber + " pageSize: " +this.pageSize)
-      this.getSearchedProducts(this.name,this.pageNumber,this.pageSize);
+      console.log("Name: " + this.name, " pageNumber: " + this.pageNumber + " pageSize: " + this.pageSize);
+      this.getSearchedProducts(this.name, this.pageNumber, this.pageSize);
 
     } else if (hasCategoryId) {
       this.currentCategoryId = +this.activateRoute.snapshot.paramMap.get('id');
@@ -65,7 +66,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   getSearchedProducts(name: string, pageNumber: number, pageSize: number) {
-    this.productService.getSearchedProductsPageable(name, pageNumber-1, pageSize)
+    this.productService.getSearchedProductsPageable(name, pageNumber - 1, pageSize)
       .subscribe(data => this.resultProcess(data))
   }
 
@@ -83,5 +84,10 @@ export class ProductsListComponent implements OnInit {
 
   changePageSize(pageSize: number) {
     this.getProducts(this.currentCategoryId, 1, pageSize);
+  }
+
+  addToCart(product: Product) {
+    console.log(`product.name ${product.name} product.description ${product.description}`)
+    this.cartItemService.addToCart(product)
   }
 }
