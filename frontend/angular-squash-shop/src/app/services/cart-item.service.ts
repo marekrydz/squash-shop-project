@@ -11,9 +11,6 @@ export class CartItemService {
   itemsInCart: CartItem[] = [];
   itemQuantity: Subject<number> = new Subject();
   totalPrice: Subject<number> = new Subject();
-  tempQuantity: number = 0;
-  tempTotalPrice: number = 0.0;
-
 
   constructor() {
   }
@@ -24,24 +21,62 @@ export class CartItemService {
 
     //Check if cart is empty
     if (this.itemsInCart.length != 0) {
-      //check if item exists in cart,
-      if (this.itemsInCart.find(tempItem => tempItem.id == item.id) != undefined) {
-        item.quantity++;
+      //check if item exists in cart, if exist get item index
+      let index: number = this.itemsInCart.findIndex(tempItem => tempItem.id == item.id);
+
+      if (index != -1) {
+        this.itemsInCart[index].quantity++;
       } else {
         this.itemsInCart.push(item);
       }
+
     } else {
       this.itemsInCart.push(item);
     }
 
-    //Calculate current cart values
-    this.tempQuantity++;
-    this.tempTotalPrice += item.unitPrice;
+    //Calculate totals price and quantity
+    this.computeCartTotals(this.itemsInCart)
+  }
 
+  computeCartTotals(items: CartItem[]) {
+    let tempQuantity: number = 0;
+    let tempTotalPrice: number = 0.0;
 
-    this.itemQuantity.next(this.tempQuantity);
-    this.totalPrice.next(this.tempTotalPrice);
+    for (let item of items) {
+      tempQuantity += item.quantity;
+      tempTotalPrice += item.unitPrice * item.quantity;
+    }
 
-    console.log(`Products in cart +${this.tempQuantity} and total price: ${this.tempTotalPrice}`);
+    this.itemQuantity.next(tempQuantity);
+    this.totalPrice.next(tempTotalPrice);
+    console.log(`Products in cart +${tempQuantity} and total price: ${tempTotalPrice}`);
+  }
+
+  raiseItemQuantity(item: CartItem) {
+    item.quantity++;
+  }
+
+  reduceItemQuantity(item: CartItem) {
+    // If quantity is 1 and user reduce, remove product from cart item list
+    if (item.quantity <= 1) {
+      let index = this.itemsInCart.indexOf(item);
+      this.itemsInCart.splice(index, 1)
+    }
+    item.quantity--;
+  }
+
+  remove(item: CartItem) {
+    console.log("name: " + item.name + " id:" + item.id);
+    console.log("Items in cart ");
+    for (let item of this.itemsInCart) {
+      console.log(item.name)
+    }
+    let index = this.itemsInCart.indexOf(item);
+    if (index != -1) {
+      this.itemsInCart.splice(index, 1)
+    } else {
+      console.log("Unknown index of product")
+    }
+
   }
 }
