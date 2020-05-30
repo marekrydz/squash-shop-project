@@ -12,8 +12,11 @@ import {ProductDetailsComponent} from './components/product-details/product-deta
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {CartStatusComponent} from './components/cart-status/cart-status.component';
 import {CartDetailsComponent} from './components/cart-details/cart-details.component';
+import {CheckoutComponent} from './components/checkout/checkout.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 const appRoutes: Routes = [
+  {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'category/:id', component: ProductsListComponent},
   {path: 'search/:name', component: ProductsListComponent},
@@ -32,7 +35,8 @@ const appRoutes: Routes = [
     SearchProductsComponent,
     ProductDetailsComponent,
     CartStatusComponent,
-    CartDetailsComponent
+    CartDetailsComponent,
+    CheckoutComponent
   ],
   imports: [
     HttpClientModule,
@@ -42,6 +46,7 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     ),
     NgbModule,
+    ReactiveFormsModule,
 ],
   providers: [ProductService],
   bootstrap: [AppComponent]

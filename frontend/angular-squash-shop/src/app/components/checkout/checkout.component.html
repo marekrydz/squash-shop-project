@@ -1,0 +1,24 @@
+<div class="main-content page-m">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <form [formGroup]="checkoutFormGroup" (submit)="onSubmit()">
+        <div formGroupName="customer" class="form-area">
+          <h3>Customer</h3>
+          <div class="form-group">
+            <label>First name</label>
+            <input type="text" formControlName="firstName">
+          </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" formControlName="lastName">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" formControlName="email">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Purchase</button>
+      </form>
+    </div>
+  </div>
+</div>
