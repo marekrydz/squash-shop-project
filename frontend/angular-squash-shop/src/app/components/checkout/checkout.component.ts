@@ -51,8 +51,8 @@ export class CheckoutComponent implements OnInit {
     console.log(this.checkoutFormGroup.controls['customer'].value.firstName)
   }
 
-  copyDataFromBillingToShippingAddress($event: Event) {
-    if ($event.currentTarget.checked) {
+  copyDataFromBillingToShippingAddress(event) {
+    if (event.currentTarget.checked) {
       this.checkoutFormGroup.controls.shippingAddress.setValue(this.checkoutFormGroup.controls.billingAddress.value);
     } else {
       this.checkoutFormGroup.controls.shippingAddress.reset()
