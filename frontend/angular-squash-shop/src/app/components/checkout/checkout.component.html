@@ -2,6 +2,8 @@
   <div class="section-content section-content-p30">
     <div class="container-fluid">
       <form [formGroup]="checkoutFormGroup" (submit)="onSubmit()">
+
+        <!--Customer-->
         <div formGroupName="customer" class="form-area">
           <h3>Customer</h3>
           <div class="form-group">
@@ -15,6 +17,93 @@
           <div class="form-group">
             <label>Email</label>
             <input type="text" formControlName="email">
+          </div>
+        </div>
+
+        <!--Billing Adrress-->
+        <div formGroupName="billingAddress" class="form-area">
+          <h3>Billing Address</h3>
+          <div class="form-group">
+            <label>Country</label>
+            <input type="text" formControlName="country">
+          </div>
+          <div class="form-group">
+            <label>Street</label>
+            <input type="text" formControlName="street">
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" formControlName="city">
+          </div>
+          <div class="form-group">
+            <label>State</label>
+            <input type="text" formControlName="state">
+          </div>
+          <div class="form-group">
+            <label>ZipCode</label>
+            <input type="text" formControlName="zipCode">
+          </div>
+        </div>
+
+        <!--checkbox-->
+        <div class="form-group">
+          <label>
+            <input (change)="copyDataFromBillingToShippingAddress($event)" type="checkbox"> Billing Address is same as
+            Shipping Address
+          </label>
+        </div>
+
+        <!--Shipping Adrress-->
+        <div formGroupName="shippingAddress" class="form-area">
+          <h3>Shipping Address</h3>
+          <div class="form-group">
+            <label>Country</label>
+            <input type="text" formControlName="country">
+          </div>
+          <div class="form-group">
+            <label>Street</label>
+            <input type="text" formControlName="street">
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" formControlName="city">
+          </div>
+          <div class="form-group">
+            <label>State</label>
+            <input type="text" formControlName="state">
+          </div>
+          <div class="form-group">
+            <label>ZipCode</label>
+            <input type="text" formControlName="zipCode">
+          </div>
+        </div>
+
+        <!--Credit Card-->
+        <div formGroupName="creditCard" class="form-area">
+          <h3>Credit Card</h3>
+          <div class="form-group">
+            <label>Card type</label>
+            <input type="text" formControlName="cardType">
+          </div>
+          <div class="form-group">
+            <label>Name on card</label>
+            <input type="text" formControlName="nameOnCard">
+          </div>
+          <div class="form-group">
+            <label>Card number</label>
+            <input type="text" formControlName="cardNumber">
+          </div>
+          <div class="form-group">
+            <label>Security code</label>
+            <input type="text" formControlName="securityCode">
+          </div>
+          <div class="form-group">
+            <label>Expiration month</label>
+            <input type="text" formControlName="expirationMonth">
+          </div>
+          <div class="form-group">
+            <label>Expiration year</label>
+            <input type="text" formControlName="expirationYear">
           </div>
         </div>
         <button type="submit" class="btn btn-primary btn-sm">Purchase</button>
